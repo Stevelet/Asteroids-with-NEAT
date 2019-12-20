@@ -1,14 +1,14 @@
-class Genome {
+class original.Genome {
   ArrayList<connectionGene> genes = new  ArrayList<connectionGene>();//a list of connections between nodes which represent the NN
-  ArrayList<Node> nodes = new ArrayList<Node>();//list of nodes
+  ArrayList<original.Node> nodes = new ArrayList<original.Node>();//list of nodes
   int inputs;
   int outputs;
   int layers =2;
   int nextNode = 0;
   int biasNode;
-  ArrayList<Node> network = new ArrayList<Node>();//a list of the nodes in the order that they need to be considered in the NN
+  ArrayList<original.Node> network = new ArrayList<original.Node>();//a list of the nodes in the order that they need to be considered in the NN
   //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  Genome(int in, int out) {
+  original.Genome(int in, int out) {
     int localNextConnectionNumber = 0; 
     //set input number and output number
     inputs = in;
@@ -16,19 +16,19 @@ class Genome {
 
     //create input nodes
     for (int i = 0; i<inputs; i++) {
-      nodes.add(new Node(i));
+      nodes.add(new original.Node(i));
       nextNode ++;
       nodes.get(i).layer =0;
     }
 
     //create output nodes
     for (int i = 0; i < outputs; i++) {
-      nodes.add(new Node(i+inputs));
+      nodes.add(new original.Node(i+inputs));
       nodes.get(i+inputs).layer = 1;
       nextNode++;
     }
 
-    nodes.add(new Node(nextNode));//bias node
+    nodes.add(new original.Node(nextNode));//bias node
     biasNode = nextNode; 
     nextNode++;
     nodes.get(biasNode).layer = 0;
@@ -55,7 +55,7 @@ class Genome {
   //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //returns the node with a matching number
   //sometimes the nodes will not be in order
-  Node getNode(int nodeNumber) {
+  original.Node getNode(int nodeNumber) {
     for (int i = 0; i < nodes.size(); i++) {
       if (nodes.get(i).number == nodeNumber) {
         return nodes.get(i);
@@ -109,7 +109,7 @@ class Genome {
 
   void generateNetwork() {
     connectNodes();
-    network = new ArrayList<Node>();
+    network = new ArrayList<original.Node>();
     //for each layer add the node in that layer, since layers cannot connect to themselves there is no need to order the nodes within a layer
 
     for (int l = 0; l< layers; l++) {//for each layer
@@ -136,7 +136,7 @@ class Genome {
     genes.get(randomConnection).enabled = false;//disable it
 
     int newNodeNo = nextNode;
-    nodes.add(new Node(newNodeNo));
+    nodes.add(new original.Node(newNodeNo));
     nextNode ++;
     //add a new connection to the new node with a weight of 1
     int connectionInnovationNumber = getInnovationNumber(innovationHistory, genes.get(randomConnection).fromNode, getNode(newNodeNo));
@@ -205,7 +205,7 @@ class Genome {
   //returns the innovation number for the new mutation
   //if this mutation has never been seen before then it will be given a new unique innovation number
   //if this mutation matches a previous mutation then it will be given the same innovation number as the previous one
-  int getInnovationNumber(ArrayList<connectionHistory> innovationHistory, Node from, Node to) {
+  int getInnovationNumber(ArrayList<connectionHistory> innovationHistory, original.Node from, original.Node to) {
     boolean isNew = true;
     int connectionInnovationNumber = nextConnectionNo;
     for (int i = 0; i < innovationHistory.size(); i++) {//for each previous mutation
@@ -282,9 +282,9 @@ class Genome {
   }
 
   //---------------------------------------------------------------------------------------------------------------------------------
-  //called when this Genome is better that the other parent
-  Genome crossover(Genome parent2) {
-    Genome child = new Genome(inputs, outputs, true);
+  //called when this original.Genome is better that the other parent
+  original.Genome crossover(original.Genome parent2) {
+    original.Genome child = new original.Genome(inputs, outputs, true);
     child.genes.clear();
     child.nodes.clear();
     child.layers = layers;
@@ -321,7 +321,7 @@ class Genome {
     }
 
 
-    //since all excess and disjoint genes are inherrited from the more fit parent (this Genome) the childs structure is no different from this parent | with exception of dormant connections being enabled but this wont effect nodes
+    //since all excess and disjoint genes are inherrited from the more fit parent (this original.Genome) the childs structure is no different from this parent | with exception of dormant connections being enabled but this wont effect nodes
     //so all the nodes can be inherrited from this parent
     for (int i = 0; i < nodes.size(); i++) {
       child.nodes.add(nodes.get(i).clone());
@@ -340,14 +340,14 @@ class Genome {
 
   //----------------------------------------------------------------------------------------------------------------------------------------
   //create an empty genome
-  Genome(int in, int out, boolean crossover) {
+  original.Genome(int in, int out, boolean crossover) {
     //set input number and output number
     inputs = in; 
     outputs = out;
   }
   //----------------------------------------------------------------------------------------------------------------------------------------
   //returns whether or not there is a gene matching the input innovation number  in the input genome
-  int matchingGene(Genome parent2, int innovationNumber) {
+  int matchingGene(original.Genome parent2, int innovationNumber) {
     for (int i =0; i < parent2.genes.size(); i++) {
       if (parent2.genes.get(i).innovationNo == innovationNumber) {
         return i;
@@ -375,9 +375,9 @@ class Genome {
 
   //----------------------------------------------------------------------------------------------------------------------------------------
   //returns a copy of this genome
-  Genome clone() {
+  original.Genome clone() {
     
-    Genome clone = new Genome(inputs, outputs, true);
+    original.Genome clone = new original.Genome(inputs, outputs, true);
 
     for (int i = 0; i < nodes.size(); i++) {//copy nodes
       clone.nodes.add(nodes.get(i).clone());
@@ -400,13 +400,13 @@ class Genome {
   //draw the genome on the screen
   void drawGenome() {
     //i know its ugly but it works (and is not that important) so I'm not going to mess with it
-    ArrayList<ArrayList<Node>> allNodes = new ArrayList<ArrayList<Node>>();
+    ArrayList<ArrayList<original.Node>> allNodes = new ArrayList<ArrayList<original.Node>>();
     ArrayList<PVector> nodePoses = new ArrayList<PVector>();
     ArrayList<Integer> nodeNumbers= new ArrayList<Integer>();
     
     //get the positions on the screen that each node is supposed to be in
     for (int i = 0; i< layers; i++) {
-      ArrayList<Node> temp = new ArrayList<Node>();
+      ArrayList<original.Node> temp = new ArrayList<original.Node>();
       for (int j = 0; j< nodes.size(); j++) {//for each node 
         if (nodes.get(j).layer == i ) {//check if it is in this layer
           temp.add(nodes.get(j)); //add it to this layer

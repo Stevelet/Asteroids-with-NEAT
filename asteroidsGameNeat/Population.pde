@@ -1,22 +1,22 @@
-class Population {
-  ArrayList<Player> pop = new ArrayList<Player>();
-  Player bestPlayer;//the best ever player 
+class original.Population {
+  ArrayList<original.Player> pop = new ArrayList<original.Player>();
+  original.Player bestPlayer;//the best ever player
   int bestScore =0;//the score of the best ever player
   //int species = 0;
   int gen;
   //int nextConnectionNumber;
   ArrayList<connectionHistory> innovationHistory = new ArrayList<connectionHistory>();
-  ArrayList<Player> genPlayers = new ArrayList<Player>();
-  ArrayList<Species> species = new ArrayList<Species>();
+  ArrayList<original.Player> genPlayers = new ArrayList<original.Player>();
+  ArrayList<original.Species> species = new ArrayList<original.Species>();
 
 
 
   //------------------------------------------------------------------------------------------------------------------------------------------
   //constructor
-  Population(int size) {
+  original.Population(int size) {
 
     for (int i =0; i<size; i++) {
-      pop.add(new Player());
+      pop.add(new original.Player());
       pop.get(i).brain.generateNetwork();
     }
   }
@@ -49,7 +49,7 @@ class Population {
   //------------------------------------------------------------------------------------------------------------------------------------------
   //sets the best player globally and for this gen
   void setBestPlayer() {
-    Player tempBest =  species.get(0).players.get(0);
+    original.Player tempBest =  species.get(0).players.get(0);
 
     genPlayers.add(tempBest);
 
@@ -76,8 +76,8 @@ class Population {
 
 
     float averageSum = getAvgFitnessSum();
-    ArrayList<Player> children = new ArrayList<Player>();//the next generation
-    for (Species s : species) {//for each species
+    ArrayList<original.Player> children = new ArrayList<original.Player>();//the next generation
+    for (original.Species s : species) {//for each species
       children.add(s.players.get(0).clone());//add champion without any mutation
       int NoOfChildren = floor(s.averageFitness/averageSum * pop.size()) -1;//the number of children this species is allowed, note -1 is because the champ is already added
       for (int i = 0; i< NoOfChildren; i++) {//get the calculated amount of children from this species
@@ -102,12 +102,12 @@ class Population {
   //------------------------------------------------------------------------------------------------------------------------------------------
 //seperate population into species based on how similar they are to the leaders of each species in the previous gen
   void speciate() {
-    for (Species s : species) {//empty species
+    for (original.Species s : species) {//empty species
       s.players.clear();
     }
     for (int i = 0; i< pop.size(); i++) {//for each player
       boolean speciesFound = false;
-      for (Species s : species) {//for each species
+      for (original.Species s : species) {//for each species
         if (s.sameSpecies(pop.get(i).brain)) {//if the player is similar enough to be considered in the same species
           s.addToSpecies(pop.get(i));//add it to the species
           speciesFound = true;
@@ -115,7 +115,7 @@ class Population {
         }
       }
       if (!speciesFound) {//if no species was similar enough then add a new species with this as its champion
-        species.add(new Species(pop.get(i)));
+        species.add(new original.Species(pop.get(i)));
       }
     }
   }
@@ -132,13 +132,13 @@ class Population {
   //sorts the players within a species and the species by their fitnesses
   void sortSpecies() {
     //sort the players within a species
-    for (Species s : species) {
+    for (original.Species s : species) {
       s.sortSpecies();
     }
     
     //sort the species by the fitness of its best player
     //using selection sort like a loser
-    ArrayList<Species> temp = new ArrayList<Species>();
+    ArrayList<original.Species> temp = new ArrayList<original.Species>();
     for (int i = 0; i < species.size(); i ++) {
       float max = 0;
       int maxIndex = 0;
@@ -180,7 +180,7 @@ class Population {
   //returns the sum of each species average fitness
   float getAvgFitnessSum() {
     float averageSum = 0;
-    for (Species s : species) {
+    for (original.Species s : species) {
       averageSum += s.averageFitness;
     }
     return averageSum;
@@ -189,7 +189,7 @@ class Population {
 //------------------------------------------------------------------------------------------------------------------------------------------
   //kill the bottom half of each species
   void cullSpecies() {
-    for (Species s : species) {
+    for (original.Species s : species) {
       s.cull(); //kill bottom half
       s.fitnessSharing();//also while we're at it lets do fitness sharing
       s.setAverage();//reset averages because they will have changed

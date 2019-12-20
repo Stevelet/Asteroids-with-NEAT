@@ -21,7 +21,7 @@ class connectionHistory {
   }
   //---------------------------------------------------------------------------------------------------------------------------------------------------------
   //returns whether the genome matches the original genome and the connection is between the same nodes
-  boolean matches(Genome genome, Node from, Node to) {
+  boolean matches(original.Genome genome, original.Node from, original.Node to) {
     if (genome.genes.size() == innovationNumbers.size()) { //if the number of connections are different then the genoemes aren't the same
       if (from.number == fromNode && to.number == toNode) {
         //next check if all the innovation numbers match from the genome

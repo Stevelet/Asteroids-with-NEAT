@@ -1,4 +1,4 @@
-class Player {
+class original.Player {
   PVector pos;
   PVector vel;
   PVector acc;
@@ -9,15 +9,15 @@ class Player {
   float spin;//the amount the ship is to spin next update
   float maxSpeed = 10;//limit the players speed at 10
   boolean boosting = false;//whether the booster is on or not
-  ArrayList<Bullet> bullets = new ArrayList<Bullet>(); //the bullets currently on screen
-  ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>(); // all the asteroids
+  ArrayList<original.Bullet> bullets = new ArrayList<original.Bullet>(); //the bullets currently on screen
+  ArrayList<original.Asteroid> asteroids = new ArrayList<original.Asteroid>(); // all the asteroids
   int asteroidCount = 1000;//the time until the next asteroid spawns
   int lives = 0;//no lives 
   boolean dead = false;//is it dead
   int immortalCount = 0; //when the player looses a life and respawns it is immortal for a small amount of time  
   int boostCount = 10;//makes the booster flash
   //--------AI stuff
-  Genome brain;
+  original.Genome brain;
   float[] vision = new float[8];//the input array fed into the neuralNet 
   float[] decision = new float[4]; //the out put of the NN 
   boolean replay = false;//whether the player is being raplayed 
@@ -38,7 +38,7 @@ class Player {
   int bestScore =0;//stores the score achieved used for replay
   //------------------------------------------------------------------------------------------------------------------------------------------
   //constructor
-  Player() {
+  original.Player() {
     pos = new PVector(width/2, height/2);
     vel = new PVector();
     acc = new PVector();  
@@ -47,19 +47,19 @@ class Player {
     randomSeed(SeedUsed);
 
     //generate asteroids
-    asteroids.add(new Asteroid(random(width), 0, random(-1, 1), random (-1, 1), 3));
-    asteroids.add(new Asteroid(random(width), 0, random(-1, 1), random (-1, 1), 3));
-    asteroids.add(new Asteroid(0, random(height), random(-1, 1), random (-1, 1), 3));
-    asteroids.add(new Asteroid(random(width), random(height), random(-1, 1), random (-1, 1), 3));
+    asteroids.add(new original.Asteroid(random(width), 0, random(-1, 1), random (-1, 1), 3));
+    asteroids.add(new original.Asteroid(random(width), 0, random(-1, 1), random (-1, 1), 3));
+    asteroids.add(new original.Asteroid(0, random(height), random(-1, 1), random (-1, 1), 3));
+    asteroids.add(new original.Asteroid(random(width), random(height), random(-1, 1), random (-1, 1), 3));
     //aim the fifth one at the player
     float randX = random(width);
     float randY = -50 +floor(random(2))* (height+100);
-    asteroids.add(new Asteroid(randX, randY, pos.x- randX, pos.y - randY, 3));     
-    brain = new Genome(33, 4);
+    asteroids.add(new original.Asteroid(randX, randY, pos.x- randX, pos.y - randY, 3));
+    brain = new original.Genome(33, 4);
   }
   //------------------------------------------------------------------------------------------------------------------------------------------
   //constructor used for replaying players
-  Player(long seed) {
+  original.Player(long seed) {
     replay = true;//is replaying
     pos = new PVector(width/2, height/2);
     vel = new PVector();
@@ -68,14 +68,14 @@ class Player {
     SeedUsed = seed;//use the parameter seed to set the asteroids at the same position as the last one
     randomSeed(SeedUsed);
     //generate asteroids
-    asteroids.add(new Asteroid(random(width), 0, random(-1, 1), random (-1, 1), 3));
-    asteroids.add(new Asteroid(random(width), 0, random(-1, 1), random (-1, 1), 3));
-    asteroids.add(new Asteroid(0, random(height), random(-1, 1), random (-1, 1), 3));
-    asteroids.add(new Asteroid(random(width), random(height), random(-1, 1), random (-1, 1), 3));
+    asteroids.add(new original.Asteroid(random(width), 0, random(-1, 1), random (-1, 1), 3));
+    asteroids.add(new original.Asteroid(random(width), 0, random(-1, 1), random (-1, 1), 3));
+    asteroids.add(new original.Asteroid(0, random(height), random(-1, 1), random (-1, 1), 3));
+    asteroids.add(new original.Asteroid(random(width), random(height), random(-1, 1), random (-1, 1), 3));
     //aim the fifth one at the player
     float randX = random(width);
     float randY = -50 +floor(random(2))* (height+100);
-    asteroids.add(new Asteroid(randX, randY, pos.x- randX, pos.y - randY, 3));
+    asteroids.add(new original.Asteroid(randX, randY, pos.x- randX, pos.y - randY, 3));
   }
 
   //------------------------------------------------------------------------------------------------------------------------------------------
@@ -126,7 +126,7 @@ class Player {
       //aim the asteroid at the player to encourage movement
       float randX = random(width);
       float randY = -50 +floor(random(2))* (height+100);
-      asteroids.add(new Asteroid(randX, randY, pos.x- randX, pos.y - randY, 3));
+      asteroids.add(new original.Asteroid(randX, randY, pos.x- randX, pos.y - randY, 3));
       asteroidCount = 1000;
     }
 
@@ -202,7 +202,7 @@ class Player {
   //shoot a bullet
   void shoot() {
     if (shootCount <=0) {//if can shoot
-      bullets.add(new Bullet(pos.x, pos.y, rotation, vel.mag()));//create bullet
+      bullets.add(new original.Bullet(pos.x, pos.y, rotation, vel.mag()));//create bullet
       shootCount = 50;//reset shoot count
       canShoot = false;
       shotsFired ++;
@@ -260,7 +260,7 @@ class Player {
     pos = new PVector(width/2, height/2);
     vel = new PVector();
     acc = new PVector();  
-    bullets = new ArrayList<Bullet>();
+    bullets = new ArrayList<original.Bullet>();
     rotation = 0;
   }
   //------------------------------------------------------------------------------------------------------------------------------------------
@@ -291,16 +291,16 @@ class Player {
 
   //---------------------------------------------------------------------------------------------------------------------------------------------------------  
   //returns a clone of this player with the same brian
-  Player clone() {
-    Player clone = new Player();
+  original.Player clone() {
+    original.Player clone = new original.Player();
     clone.brain = brain.clone();
     clone.fitness = fitness;
     clone.brain.generateNetwork();
     return clone;
   }
   //returns a clone of this player with the same brian and same random seeds used so all of the asteroids will be in  the same positions
-  Player cloneForReplay() {
-    Player clone = new Player(SeedUsed);
+  original.Player cloneForReplay() {
+    original.Player clone = new original.Player(SeedUsed);
     clone.brain = brain.clone();
     clone.fitness = fitness;
     clone.bestScore = score;
@@ -309,8 +309,8 @@ class Player {
     return clone;
   }
   //---------------------------------------------------------------------------------------------------------------------------------------------------------  
-  Player crossover(Player parent2) {
-    Player child = new Player();
+  original.Player crossover(original.Player parent2) {
+    original.Player child = new original.Player();
     child.brain = brain.crossover(parent2.brain);
     child.brain.generateNetwork();
     return child;
@@ -351,11 +351,11 @@ class Player {
     while (distance< 60) {//!(position.x < 400 || position.y < 0 || position.x >= 800 || position.y >= 400)) {
 
 
-      for (Asteroid a : asteroids) {
+      for (original.Asteroid a : asteroids) {
         if (a.lookForHit(position) ) {
 
           vision[visionPos] =  1/distance;
-          Asteroid asteroidHit = a.getAsteroid(position);
+          original.Asteroid asteroidHit = a.getAsteroid(position);
           //vision[visionPos+1] = map(asteroidHit.size, 1, 3, 0, 1);
 
 

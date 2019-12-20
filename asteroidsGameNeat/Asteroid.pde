@@ -1,14 +1,14 @@
-class Asteroid {
+class original.Asteroid {
   PVector pos;
   PVector vel; 
   int size = 3;//3 = large 2 = medium and 1 = small
   float radius;
-  ArrayList<Asteroid> chunks = new ArrayList<Asteroid>();//each asteroid contains 2 smaller asteroids which are released when shot
+  ArrayList<original.Asteroid> chunks = new ArrayList<original.Asteroid>();//each asteroid contains 2 smaller asteroids which are released when shot
   boolean split = false;//whether the asteroid has been hit and split into to 2
   int sizeHit;
   //------------------------------------------------------------------------------------------------------------------------------------------
   //constructor 
-  Asteroid(float posX, float posY, float velX, float velY, int sizeNo) {
+  original.Asteroid(float posX, float posY, float velX, float velY, int sizeNo) {
     pos = new PVector(posX, posY);
     size = sizeNo;
     vel = new PVector(velX, velY);
@@ -36,7 +36,7 @@ class Asteroid {
   //draw the asteroid
   void show() {
     if (split) {//if split show the 2 chunks
-      for (Asteroid a : chunks) {
+      for (original.Asteroid a : chunks) {
         a.show();
       }
     } else {// if still whole
@@ -62,7 +62,7 @@ class Asteroid {
   //adds the velocity to the position
   void move() {
     if (split) {//if split move the chunks
-      for (Asteroid a : chunks) {
+      for (original.Asteroid a : chunks) {
         a.move();
       }
     } else {//if not split
@@ -91,7 +91,7 @@ class Asteroid {
   //checks if a bullet hit the asteroid 
   boolean checkIfHit(PVector bulletPos) {
     if (split) {//if split check if the bullet hit one of the chunks
-      for (Asteroid a : chunks) {
+      for (original.Asteroid a : chunks) {
         if (a.checkIfHit(bulletPos)) {
           return true;
         }
@@ -134,7 +134,7 @@ class Asteroid {
   //this one checks if the player hit the asteroid
   boolean checkIfHitPlayer(PVector playerPos) {
     if (split) {//if split check if the player hit one of the chunks
-      for (Asteroid a : chunks) {
+      for (original.Asteroid a : chunks) {
         if (a.checkIfHitPlayer(playerPos)) {
           return true;
         }
@@ -182,7 +182,7 @@ class Asteroid {
   //same as checkIfHit but it doesnt destroy the asteroid used by the look function
   boolean lookForHit(PVector bulletPos) {
     if (split) {
-      for (Asteroid a : chunks) {
+      for (original.Asteroid a : chunks) {
         if (a.lookForHit(bulletPos)) {
           return true;
         }
@@ -231,16 +231,16 @@ class Asteroid {
       //add 2 smaller asteroids to the chunks array with slightly different velocities
       PVector velocity = new PVector(vel.x, vel.y);
       velocity.rotate(-0.3);
-      chunks.add(new Asteroid(pos.x, pos.y, velocity.x, velocity.y, size-1)); 
+      chunks.add(new original.Asteroid(pos.x, pos.y, velocity.x, velocity.y, size-1));
       velocity.rotate(0.5);
-      chunks.add(new Asteroid(pos.x, pos.y, velocity.x, velocity.y, size-1));
+      chunks.add(new original.Asteroid(pos.x, pos.y, velocity.x, velocity.y, size-1));
     }
   }
 
-  Asteroid getAsteroid(PVector bulletPos) {
+  original.Asteroid getAsteroid(PVector bulletPos) {
 
     if (split) {
-      for (Asteroid a : chunks) {
+      for (original.Asteroid a : chunks) {
         if (a.getAsteroid(bulletPos)!= null) {
           return a.getAsteroid(bulletPos);
         }

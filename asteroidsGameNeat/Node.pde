@@ -1,4 +1,4 @@
-class Node {
+class original.Node {
   int number;
   float inputSum = 0;//current sum i.e. before activation
   float outputValue = 0; //after activation function is applied
@@ -7,7 +7,7 @@ class Node {
   PVector drawPos = new PVector();
   //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //constructor
-  Node(int no) {
+  original.Node(int no) {
     number = no;
   }
 
@@ -42,7 +42,7 @@ class Node {
   //----------------------------------------------------------------------------------------------------------------------------------------------------------
   //returns whether this node connected to the parameter node
   //used when adding a new connection 
-  boolean isConnectedTo(Node node) {
+  boolean isConnectedTo(original.Node node) {
     if (node.layer == layer) {//nodes in the same layer cannot be connected
       return false;
     }
@@ -66,8 +66,8 @@ class Node {
   }
   //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //returns a copy of this node
-  Node clone() {
-    Node clone = new Node(number);
+  original.Node clone() {
+    original.Node clone = new original.Node(number);
     clone.layer = layer;
     return clone;
   }

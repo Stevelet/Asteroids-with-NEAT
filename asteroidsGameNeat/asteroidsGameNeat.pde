@@ -1,5 +1,5 @@
-Player humanPlayer;//the player which the user (you) controls
-Population pop; 
+original.Player humanPlayer;//the player which the user (you) controls
+original.Population pop;
 int speed = 100;
 float globalMutationRate = 0.1;
 PFont font;
@@ -12,20 +12,20 @@ boolean humanPlaying = false; //true if the user is playing
 
 boolean runThroughSpecies = false;
 int upToSpecies = 0;
-Player speciesChamp;
+original.Player speciesChamp;
 
 boolean showBrain = false;
 
 boolean showBestEachGen = false;
 int upToGen = 0;
-Player genPlayerTemp;
+original.Player genPlayerTemp;
 
 //----------------------------------------------------------------------------------------------------------------------------------------
 void setup() {//on startup
   size(1200, 675);
 
-  humanPlayer = new Player();
-  pop = new Population(300);// create new population of size 200
+  humanPlayer = new original.Player();
+  pop = new original.Population(300);// create new population of size 200
   frameRate(speed);
   font = loadFont("AgencyFB-Reg-48.vlw");
 }
@@ -125,7 +125,7 @@ void keyPressed() {
     break;
   case 'p'://play
     humanPlaying = !humanPlaying;
-    humanPlayer = new Player();
+    humanPlayer = new original.Player();
     break;  
   case '+'://speed up frame rate
     speed += 10;
@@ -235,7 +235,7 @@ void showScore() {
       fill(255);
       textAlign(LEFT);
       text("Score: " + speciesChamp.score, 80, 60);
-      text("Species: " + (upToSpecies +1), width-250, 60);
+      text("original.Species: " + (upToSpecies +1), width-250, 60);
     } else
       if (humanPlaying) {
         textFont(font);

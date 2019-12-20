@@ -1,4 +1,4 @@
-class Bullet {
+class original.Bullet {
   PVector pos;
   PVector vel;
   float speed = 10; 
@@ -6,7 +6,7 @@ class Bullet {
   int lifespan = 60;
   //------------------------------------------------------------------------------------------------------------------------------------------
 
-  Bullet(float x, float y, float r, float playerSpeed) {
+  original.Bullet(float x, float y, float r, float playerSpeed) {
 
     pos = new PVector(x, y);
     vel = PVector.fromAngle(r);
